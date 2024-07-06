@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Eureka/Eureka.iml" filepath="$PROJECT_DIR$/Eureka/Eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FirstApp/FirstApp.iml" filepath="$PROJECT_DIR$/FirstApp/FirstApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Microservices-main.iml" filepath="$PROJECT_DIR$/.idea/Microservices-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SecondApp/SecondApp.iml" filepath="$PROJECT_DIR$/SecondApp/SecondApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/getwayApi/getwayApi.iml" filepath="$PROJECT_DIR$/getwayApi/getwayApi.iml" />
+    </modules>
+  </component>
+</project>

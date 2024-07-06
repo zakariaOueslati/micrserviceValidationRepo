@@ -1,0 +1,79 @@
+version: "3.9"
+services:
+
+  eureka:
+    image: eurekaserver:latest
+    build: ./EurekaServer
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - my-network
+
+  api-gateway:
+    image: apigateway:latest
+    build: ./ApiGateway
+    container_name: api-gateway
+    ports:
+      - "9090:9090"
+    depends_on:
+      - eureka
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+    networks:
+      - my-network
+
+  first-app:
+    image: firstapp:latest
+    build: ./FirstApp
+    container_name: first-app
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka
+      - postgres
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/firstdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    networks:
+      - my-network
+
+  second-app:
+    image: secondapp:latest
+    build: ./SecondApp
+    container_name: second-app
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka
+      - postgres
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/seconddb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    networks:
+      - my-network
+
+  postgres:
+    image: postgres:12
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=librarydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+    volumes:
+      - db:/var/lib/postgresql/data
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  db:
